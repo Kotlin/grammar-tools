@@ -5,6 +5,7 @@ import java.nio.charset.StandardCharsets
 plugins {
     kotlin("jvm") version "1.3.11"
     antlr
+    `maven-publish`
 }
 
 group = "org.jetbrains.kotlin"
@@ -12,13 +13,23 @@ version = "0.1"
 
 repositories {
     mavenCentral()
-    jcenter()
 }
 
 dependencies {
     antlr("org.antlr:antlr4:4.7.1")
     compile(kotlin("stdlib-jdk8"))
-    compile("org.antlr:antlr4:4.7.1")
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = group as String
+            artifactId = "kotlin-grammar-tools"
+            version = version as String
+
+            from(components["java"])
+        }
+    }
 }
 
 tasks.withType<KotlinCompile> {
