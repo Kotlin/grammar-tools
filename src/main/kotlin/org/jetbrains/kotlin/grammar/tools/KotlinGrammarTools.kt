@@ -11,11 +11,23 @@ class KotlinToken(
 }
 
 class KotlinTokensList(list: List<KotlinToken>): ArrayList<KotlinToken>(list) {
-    override fun toString() = this.joinToString(System.lineSeparator())
+    override fun toString() = joinToString(System.lineSeparator())
 }
 
 enum class KotlinParseTreeNodeType {
     RULE, TERMINAL
+}
+
+class KotlinLexerException(val lexerMessage: String, val position: Pair<Int, Int>) : Throwable() {
+    init {
+        System.err.println("Lexer error: $lexerMessage, position: $position")
+    }
+}
+
+class KotlinParserException(val parserMessage: String, val position: Pair<Int, Int>) : Throwable() {
+    init {
+        System.err.println("Parser error: $parserMessage, position: $position")
+    }
 }
 
 class KotlinParseTree(

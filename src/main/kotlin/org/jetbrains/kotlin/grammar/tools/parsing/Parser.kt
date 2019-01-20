@@ -2,7 +2,6 @@ package org.jetbrains.kotlin.grammar.tools.parsing
 
 import org.antlr.v4.runtime.*
 import org.antlr.v4.runtime.tree.ParseTree
-import org.jetbrains.kotlin.grammar.tools.KotlinToken
 import java.io.ByteArrayInputStream
 import org.antlr.v4.runtime.misc.Pair
 import java.nio.charset.StandardCharsets
@@ -10,11 +9,31 @@ import org.antlr.v4.runtime.Token.DEFAULT_CHANNEL
 import org.antlr.v4.runtime.tree.TerminalNodeImpl
 import org.jetbrains.kotlin.grammar.parser.KotlinLexer
 import org.jetbrains.kotlin.grammar.parser.KotlinParser
-import org.jetbrains.kotlin.grammar.tools.KotlinParseTree
-import org.jetbrains.kotlin.grammar.tools.KotlinParseTreeNodeType
-import org.jetbrains.kotlin.grammar.tools.KotlinTokensList
+import org.jetbrains.kotlin.grammar.tools.*
 
 internal object Parser {
+    private val errorLexerListener = object : BaseErrorListener() {
+        override fun syntaxError(
+            recognizer: Recognizer<*, *>?,
+            offendingSymbol: Any?,
+            line: Int,
+            charPositionInLine: Int,
+            message: String,
+            e: RecognitionException?
+        ) = throw KotlinLexerException(message, kotlin.Pair(line, charPositionInLine))
+    }
+
+    private val errorParserListener = object : BaseErrorListener() {
+        override fun syntaxError(
+            recognizer: Recognizer<*, *>?,
+            offendingSymbol: Any?,
+            line: Int,
+            charPositionInLine: Int,
+            message: String,
+            e: RecognitionException?
+        ) = throw KotlinParserException(message, kotlin.Pair(line, charPositionInLine))
+    }
+
     private fun getCharsStream(str: String) =
         CharStreams.fromStream(ByteArrayInputStream(str.toByteArray()), StandardCharsets.UTF_8)
 
@@ -29,7 +48,10 @@ internal object Parser {
     }
 
     fun tokenize(sourceCode: String): KotlinTokensList {
-        val lexer = KotlinLexer(getCharsStream(sourceCode))
+        val lexer = KotlinLexer(getCharsStream(sourceCode)).apply {
+            removeErrorListeners()
+            addErrorListener(errorLexerListener)
+        }
 
         return KotlinTokensList(
             lexer.allTokens.map {
@@ -74,7 +96,10 @@ internal object Parser {
     fun parse(tokens: List<KotlinToken>): KotlinParseTree {
         val tokenTypeMap = KotlinLexer(null).tokenTypeMap
         val tokensList = ListTokenSource(tokens.map { getAntlrTokenByKotlinToken(it, tokenTypeMap) })
-        val parser = KotlinParser(CommonTokenStream(tokensList))
+        val parser = KotlinParser(CommonTokenStream(tokensList)).apply {
+            removeErrorListeners()
+            addErrorListener(errorParserListener)
+        }
         val tree = parser.kotlinFile()
 
         return buildTree(
