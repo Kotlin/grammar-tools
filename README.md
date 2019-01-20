@@ -36,3 +36,27 @@ Now the library has experimental status and isn't published in the maven.
 
 To use the library you can run `publishToMavenLocal` gradle task and add `mavenLocal` repo and dependency from the library.
 For example (gradle): `compile("org.jetbrains.kotlin:kotlin-grammar-tools:0.1")`.
+
+## Exceptions
+
+Lexer and parser are throwing exceptions if it has been inputted the invalid code (in terms of lexer or parser): `KotlinLexerException` and `KotlinParserException`.
+
+Example of handling this exceptions:
+```kotlin
+fun foo(): ParseTree? {
+    val tokens = try {
+        tokenizeKotlinCode("val x = foo() + 10;")
+    } catch (e: KotlinLexerException) {
+        println("Tokenization the code fails")
+        return null
+    }
+    val parseTree = try {
+        parseKotlinCode(tokens)
+    } catch (e: KotlinParserException) {
+        println("Parsing the code fails")
+        return null
+    }
+
+    return parseTree
+}
+```
