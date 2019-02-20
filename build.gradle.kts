@@ -44,7 +44,7 @@ tasks.withType<AntlrTask> {
 
 tasks.create("updateGrammar") {
     doFirst {
-        val grammarUrlPrefix = "https://raw.githubusercontent.com/JetBrains/kotlin-spec/spec-rework/src/grammar/"
+        val grammarUrlPrefix = "https://raw.githubusercontent.com/JetBrains/kotlin-spec/master/src/grammar/"
         val grammarLocalPathPrefix = "src/main/antlr/".also { File(it).mkdirs() }
 
         setOf("UnicodeClasses.g4", "KotlinLexer.g4", "KotlinParser.g4").forEach {
