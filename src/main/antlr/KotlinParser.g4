@@ -21,7 +21,7 @@ shebangLine
     ;
 
 fileAnnotation
-    : AT_FILE NL* COLON NL* (LSQUARE unescapedAnnotation+ RSQUARE | unescapedAnnotation) NL*
+    : ANNOTATION_USE_SITE_TARGET_FILE NL* (LSQUARE unescapedAnnotation+ RSQUARE | unescapedAnnotation) NL*
     ;
 
 packageHeader
@@ -490,9 +490,9 @@ valueArgument
 
 primaryExpression
     : parenthesizedExpression
+    | simpleIdentifier
     | literalConstant
     | stringLiteral
-    | simpleIdentifier
     | callableReference
     | functionLiteral
     | objectLiteral
@@ -603,8 +603,8 @@ superExpression
     ;
 
 ifExpression
-    : IF NL* LPAREN NL* expression NL* RPAREN NL* controlStructureBody (SEMICOLON? NL* ELSE NL* controlStructureBody)?
-    | IF NL* LPAREN NL* expression NL* RPAREN NL* (SEMICOLON NL*)? ELSE NL* controlStructureBody
+    : IF NL* LPAREN NL* expression NL* RPAREN NL* (controlStructureBody | SEMICOLON)
+    | IF NL* LPAREN NL* expression NL* RPAREN NL* controlStructureBody? NL* SEMICOLON? NL* ELSE NL* (controlStructureBody | SEMICOLON)
     ;
 
 whenSubject
@@ -639,7 +639,7 @@ tryExpression
     ;
 
 catchBlock
-    : CATCH NL* LPAREN annotation* simpleIdentifier COLON userType RPAREN NL* block
+    : CATCH NL* LPAREN annotation* simpleIdentifier COLON type RPAREN NL* block
     ;
 
 finallyBlock
@@ -830,24 +830,24 @@ annotation
     ;
 
 singleAnnotation
-    : annotationUseSiteTarget NL* COLON NL* unescapedAnnotation
+    : annotationUseSiteTarget NL* unescapedAnnotation
     | AT unescapedAnnotation
     ;
 
 multiAnnotation
-    : annotationUseSiteTarget NL* COLON NL* LSQUARE unescapedAnnotation+ RSQUARE
+    : annotationUseSiteTarget NL* LSQUARE unescapedAnnotation+ RSQUARE
     | AT LSQUARE unescapedAnnotation+ RSQUARE
     ;
 
 annotationUseSiteTarget
-    : AT_FIELD
-    | AT_PROPERTY
-    | AT_GET
-    | AT_SET
-    | AT_RECEIVER
-    | AT_PARAM
-    | AT_SETPARAM
-    | AT_DELEGATE
+    : ANNOTATION_USE_SITE_TARGET_FIELD
+    | ANNOTATION_USE_SITE_TARGET_PROPERTY
+    | ANNOTATION_USE_SITE_TARGET_GET
+    | ANNOTATION_USE_SITE_TARGET_SET
+    | ANNOTATION_USE_SITE_TARGET_RECEIVER
+    | ANNOTATION_USE_SITE_TARGET_PARAM
+    | ANNOTATION_USE_SITE_TARGET_SETPARAM
+    | ANNOTATION_USE_SITE_TARGET_DELEGATE
     ;
 
 unescapedAnnotation

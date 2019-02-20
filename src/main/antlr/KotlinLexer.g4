@@ -41,7 +41,7 @@ RPAREN: ')';
 LSQUARE: '[' -> pushMode(Inside);
 RSQUARE: ']';
 LCURL: '{' -> pushMode(DEFAULT_MODE);
-RCURL: '}';
+RCURL: '}' { if (!_modeStack.isEmpty()) { popMode(); } };
 MULT: '*';
 MOD: '%';
 DIV: '/';
@@ -90,15 +90,15 @@ BREAK_AT: 'break@' Identifier;
 THIS_AT: 'this@' Identifier;
 SUPER_AT: 'super@' Identifier;
 
-AT_FILE: '@file';
-AT_FIELD: '@field';
-AT_PROPERTY: '@property';
-AT_GET: '@get';
-AT_SET: '@set';
-AT_RECEIVER: '@receiver';
-AT_PARAM: '@param';
-AT_SETPARAM: '@setparam';
-AT_DELEGATE: '@delegate';
+ANNOTATION_USE_SITE_TARGET_FILE: '@file' NL* COLON;
+ANNOTATION_USE_SITE_TARGET_FIELD: '@field' NL* COLON;
+ANNOTATION_USE_SITE_TARGET_PROPERTY: '@property' NL* COLON;
+ANNOTATION_USE_SITE_TARGET_GET: '@get' NL* COLON;
+ANNOTATION_USE_SITE_TARGET_SET: '@set' NL* COLON;
+ANNOTATION_USE_SITE_TARGET_RECEIVER: '@receiver' NL* COLON;
+ANNOTATION_USE_SITE_TARGET_PARAM: '@param' NL* COLON;
+ANNOTATION_USE_SITE_TARGET_SETPARAM: '@setparam' NL* COLON;
+ANNOTATION_USE_SITE_TARGET_DELEGATE: '@delegate' NL* COLON;
 
 PACKAGE: 'package';
 IMPORT: 'import';
@@ -112,7 +112,7 @@ TYPE_ALIAS: 'typealias';
 CONSTRUCTOR: 'constructor';
 BY: 'by';
 COMPANION: 'companion';
-INIT: 'init'  ;
+INIT: 'init';
 THIS: 'this';
 SUPER: 'super';
 TYPEOF: 'typeof';
@@ -181,7 +181,7 @@ fragment DecDigits
     | DecDigit
     ;
 
-DoubleExponent: [eE] [+-]? DecDigits;
+fragment DoubleExponent: [eE] [+-]? DecDigits;
 
 RealLiteral
     : FloatLiteral
@@ -241,7 +241,7 @@ fragment UnicodeDigit: UNICODE_CLASS_ND;
 
 Identifier
     : (Letter | '_') (Letter | '_' | UnicodeDigit)*
-    | '`' ~('\r' | '\n' | '`' | '[' | ']' | '<' | '>')+ '`'
+    | '`' ~([\r\n] | '`' | '.' | ';' | ':' | '\\' | '/' | '[' | ']' | '<' | '>')+ '`'
     ;
 
 IdentifierOrSoftKey
@@ -438,15 +438,15 @@ Inside_OBJECT: OBJECT -> type(OBJECT);
 Inside_SUPER: SUPER -> type(SUPER);
 Inside_IN: IN -> type(IN);
 Inside_OUT: OUT -> type(OUT);
-Inside_AT_FIELD: AT_FIELD -> type(AT_FIELD);
-Inside_AT_FILE: AT_FILE -> type(AT_FILE);
-Inside_AT_PROPERTY: AT_PROPERTY -> type(AT_PROPERTY);
-Inside_AT_GET: AT_GET -> type(AT_GET);
-Inside_AT_SET: AT_SET -> type(AT_SET);
-Inside_AT_RECEIVER: AT_RECEIVER -> type(AT_RECEIVER);
-Inside_AT_PARAM: AT_PARAM -> type(AT_PARAM);
-Inside_AT_SETPARAM: AT_SETPARAM -> type(AT_SETPARAM);
-Inside_AT_DELEGATE: AT_DELEGATE -> type(AT_DELEGATE);
+Inside_ANNOTATION_USE_SITE_TARGET_FIELD: ANNOTATION_USE_SITE_TARGET_FIELD -> type(ANNOTATION_USE_SITE_TARGET_FIELD);
+Inside_ANNOTATION_USE_SITE_TARGET_FILE: ANNOTATION_USE_SITE_TARGET_FILE -> type(ANNOTATION_USE_SITE_TARGET_FILE);
+Inside_ANNOTATION_USE_SITE_TARGET_PROPERTY: ANNOTATION_USE_SITE_TARGET_PROPERTY -> type(ANNOTATION_USE_SITE_TARGET_PROPERTY);
+Inside_ANNOTATION_USE_SITE_TARGET_GET: ANNOTATION_USE_SITE_TARGET_GET -> type(ANNOTATION_USE_SITE_TARGET_GET);
+Inside_ANNOTATION_USE_SITE_TARGET_SET: ANNOTATION_USE_SITE_TARGET_SET -> type(ANNOTATION_USE_SITE_TARGET_SET);
+Inside_ANNOTATION_USE_SITE_TARGET_RECEIVER: ANNOTATION_USE_SITE_TARGET_RECEIVER -> type(ANNOTATION_USE_SITE_TARGET_RECEIVER);
+Inside_ANNOTATION_USE_SITE_TARGET_PARAM: ANNOTATION_USE_SITE_TARGET_PARAM -> type(ANNOTATION_USE_SITE_TARGET_PARAM);
+Inside_ANNOTATION_USE_SITE_TARGET_SETPARAM: ANNOTATION_USE_SITE_TARGET_SETPARAM -> type(ANNOTATION_USE_SITE_TARGET_SETPARAM);
+Inside_ANNOTATION_USE_SITE_TARGET_DELEGATE: ANNOTATION_USE_SITE_TARGET_DELEGATE -> type(ANNOTATION_USE_SITE_TARGET_DELEGATE);
 Inside_THROW: THROW -> type(THROW);
 Inside_RETURN: RETURN -> type(RETURN);
 Inside_CONTINUE: CONTINUE -> type(CONTINUE);
@@ -507,3 +507,7 @@ Inside_IdentifierAt: IdentifierAt -> type(IdentifierAt);
 Inside_Comment: (LineComment | DelimitedComment) -> channel(HIDDEN);
 Inside_WS: WS -> channel(HIDDEN);
 Inside_NL: NL -> channel(HIDDEN);
+
+mode DEFAULT_MODE;
+
+ErrorCharacter: .;
