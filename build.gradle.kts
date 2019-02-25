@@ -13,11 +13,13 @@ version = "0.1"
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
     antlr("org.antlr:antlr4:4.7.1")
     compile(kotlin("stdlib-jdk8"))
+    compile("org.jetbrains.kotlin.spec.grammar:kotlin-grammar-parser:0.1")
 }
 
 publishing {

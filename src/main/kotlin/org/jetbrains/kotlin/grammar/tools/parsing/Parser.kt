@@ -7,9 +7,9 @@ import org.antlr.v4.runtime.misc.Pair
 import java.nio.charset.StandardCharsets
 import org.antlr.v4.runtime.Token.DEFAULT_CHANNEL
 import org.antlr.v4.runtime.tree.TerminalNodeImpl
-import org.jetbrains.kotlin.grammar.parser.KotlinLexer
-import org.jetbrains.kotlin.grammar.parser.KotlinParser
 import org.jetbrains.kotlin.grammar.tools.*
+import org.jetbrains.kotlin.spec.grammar.KotlinLexer
+import org.jetbrains.kotlin.spec.grammar.KotlinParser
 
 internal object Parser {
     private val errorLexerListener = object : BaseErrorListener() {
