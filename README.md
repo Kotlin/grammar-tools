@@ -1,5 +1,7 @@
 # kotlin-grammar-tools
 
+[![TeamCity (simple build status)](https://img.shields.io/teamcity/https/teamcity.jetbrains.com/e/Kotlin_spec_GrammarTests.svg?style=flat)](https://teamcity.jetbrains.com/viewType.html?buildTypeId=Kotlin_Spec_GrammarTests&branch_Kotlin_dev=%3Cdefault%3E&tab=buildTypeStatusDiv)
+
 ## Description
 
 This library allows tokenize and parse Kotlin code in your program using the Kotlin grammar.
@@ -24,18 +26,20 @@ This is due to the fact that some errors for the user convenience are not genera
 
 The grammar is located in the [Kotlin specification repository](https://github.com/JetBrains/kotlin-spec/tree/master/grammar).
 
-To update the Kotlin grammar the gradle task `updateGrammar` runs.
-
-To generate the Kotlin parser and lexer the gradle task `generateGrammarSource` runs (using ANTLR gradle plugin).
-
 ## Library status
 
 Now the library has experimental status and isn't published in the maven.
 
+## Dependencies
+
+This library depends on **`kotlin-grammar-parser-{version}-{buildNo}.jar`**, which can be downloaded from Jetbrains TeamCity, the [Kotlin Grammar builds page](https://teamcity.jetbrains.com/viewType.html?buildTypeId=Kotlin_Spec_GrammarMaster) and added to the local maven repository.
+
 ## Using
 
-To use the library you can run `publishToMavenLocal` gradle task and add `mavenLocal` repo and dependency from the library.
+To use the library you can run the `publishToMavenLocal` gradle task and add `mavenLocal` to repositories, and then add dependency from this library.
 For example (gradle): `compile("org.jetbrains.kotlin:kotlin-grammar-tools:0.1")`.
+
+`kotlin-grammar-tools` artifacts can be found on the [TeamCity build pages](https://teamcity.jetbrains.com/viewType.html?buildTypeId=Kotlin_Spec_GrammarMaster).
 
 ## Exceptions
 
