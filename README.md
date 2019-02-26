@@ -22,7 +22,7 @@ This is due to the fact that some errors for the user convenience are not genera
 
 ### Kotlin grammar
 
-The grammar is located in the [Kotlin specification repository](https://github.com/JetBrains/kotlin-spec/tree/master/src/grammar).
+The grammar is located in the [Kotlin specification repository](https://github.com/JetBrains/kotlin-spec/tree/master/grammar).
 
 To update the Kotlin grammar the gradle task `updateGrammar` runs.
 
