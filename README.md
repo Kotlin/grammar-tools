@@ -30,16 +30,11 @@ The grammar is located in the [Kotlin specification repository](https://github.c
 
 Now the library has experimental status and isn't published in the maven.
 
-## Dependencies
-
-This library depends on **`kotlin-grammar-parser-{version}-{buildNo}.jar`**, which can be downloaded from Jetbrains TeamCity, the [Kotlin Grammar builds page](https://teamcity.jetbrains.com/viewType.html?buildTypeId=Kotlin_Spec_GrammarMaster) and added to the local maven repository.
-
 ## Using
 
-To use the library you can run the `publishToMavenLocal` gradle task and add `mavenLocal` to repositories, and then add dependency from this library.
-For example (gradle): `compile("org.jetbrains.kotlin:kotlin-grammar-tools:0.1")`.
+To use the library you can run the `publishToMavenLocal` gradle task and add `mavenLocal` to repositories in your program, and then add dependency from this library. For example (gradle): `compile("org.jetbrains.kotlin:kotlin-grammar-tools:0.1")`.
 
-`kotlin-grammar-tools` artifacts can be found on the [TeamCity build pages](https://teamcity.jetbrains.com/viewType.html?buildTypeId=Kotlin_Spec_GrammarMaster).
+Also, you can just download jar from [Releases](https://github.com/Kotlin/kotlin-grammar-tools/releases) or TeamCity (`kotlin-grammar-tools` artifacts can be found on the [TeamCity Kotlin grammar builds pages](https://teamcity.jetbrains.com/viewType.html?buildTypeId=Kotlin_Spec_GrammarMaster)).
 
 ## Exceptions
 
