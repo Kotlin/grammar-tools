@@ -1,4 +1,4 @@
-package org.jetbrains.kotlin.grammar.tools.parsing
+package org.jetbrains.kotlin.spec.grammar.tools.parsing
 
 import org.antlr.v4.runtime.*
 import org.antlr.v4.runtime.tree.ParseTree
@@ -7,7 +7,7 @@ import org.antlr.v4.runtime.misc.Pair
 import java.nio.charset.StandardCharsets
 import org.antlr.v4.runtime.Token.DEFAULT_CHANNEL
 import org.antlr.v4.runtime.tree.TerminalNodeImpl
-import org.jetbrains.kotlin.grammar.tools.*
+import org.jetbrains.kotlin.spec.grammar.tools.*
 import org.jetbrains.kotlin.spec.grammar.KotlinLexer
 import org.jetbrains.kotlin.spec.grammar.KotlinParser
 

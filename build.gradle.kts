@@ -5,7 +5,7 @@ plugins {
     `maven-publish`
 }
 
-group = "org.jetbrains.kotlin"
+group = "org.jetbrains.kotlin.spec.grammar.tools"
 version = "0.1"
 
 val archivePrefix = "kotlin-grammar-tools"

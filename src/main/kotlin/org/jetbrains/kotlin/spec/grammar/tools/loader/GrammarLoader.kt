@@ -1,4 +1,4 @@
-package org.jetbrains.kotlin.grammar.tools.loader
+package org.jetbrains.kotlin.spec.grammar.tools.loader
 
 import java.io.File
 

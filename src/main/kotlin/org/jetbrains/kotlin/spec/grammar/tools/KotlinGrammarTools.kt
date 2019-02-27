@@ -1,6 +1,6 @@
-package org.jetbrains.kotlin.grammar.tools
+package org.jetbrains.kotlin.spec.grammar.tools
 
-import org.jetbrains.kotlin.grammar.tools.parsing.Parser
+import org.jetbrains.kotlin.spec.grammar.tools.parsing.Parser
 
 class KotlinToken(
     val type: String,
