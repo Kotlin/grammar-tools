@@ -10,7 +10,6 @@ version = "0.1"
 
 val archivePrefix = "kotlin-grammar-tools"
 val jar: Jar by tasks
-jar.archiveName = "$archivePrefix.jar"
 
 repositories {
     mavenCentral()
@@ -18,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    compile(kotlin("stdlib-jdk8"))
+    compileOnly(kotlin("stdlib-jdk8"))
     compile("org.jetbrains.kotlin.spec.grammar:kotlin-grammar-parser:0.1")
 }
 
@@ -37,3 +36,15 @@ publishing {
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
+
+jar.archiveName = "$archivePrefix-$version.jar"
+
+jar.manifest {
+    attributes(
+        mapOf(
+            "Class-Path" to configurations.runtime.files.joinToString(" ") { it.name }
+        )
+    )
+}
+
+jar.from(configurations.runtime.map { if (it.isDirectory) it else zipTree(it) })
