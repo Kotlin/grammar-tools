@@ -12,8 +12,8 @@ val archivePrefix = "kotlin-grammar-tools"
 val jar: Jar by tasks
 
 repositories {
-    mavenCentral()
     mavenLocal()
+    mavenCentral()
 }
 
 dependencies {
