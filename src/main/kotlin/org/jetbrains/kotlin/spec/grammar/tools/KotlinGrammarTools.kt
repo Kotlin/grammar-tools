@@ -32,8 +32,8 @@ class KotlinParserException(val parserMessage: String, val position: Pair<Int, I
 
 class KotlinParseTree(
     val type: KotlinParseTreeNodeType,
-    private val name: String,
-    private val text: String? = null,
+    val name: String,
+    val text: String? = null,
     val children: MutableList<KotlinParseTree> = mutableListOf()
 ) {
     companion object {
