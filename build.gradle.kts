@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.3.11"
+    kotlin("jvm") version "1.4.31"
     `maven-publish`
 }
 
@@ -47,4 +47,4 @@ jar.manifest {
     )
 }
 
-jar.from(configurations.runtime.map { if (it.isDirectory) it else zipTree(it) })
+jar.from(configurations.runtime.files.map { if (it.isDirectory) it else zipTree(it) })
