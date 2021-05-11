@@ -26,9 +26,9 @@ This is due to the fact that some errors for the user convenience are not genera
 
 The grammar is located in the [Kotlin specification repository](https://github.com/JetBrains/kotlin-spec/tree/master/grammar).
 
-## Library status
+## Status
 
-Now the library has experimental status and isn't published in the maven.
+The library is develped **only for internal purposes** of the Kotlin team, and actual state of the library isn't guaranteed.
 
 ## Using
 
