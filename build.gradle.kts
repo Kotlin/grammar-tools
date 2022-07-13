@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.4.31"
+    kotlin("jvm") version "1.7.0"
     `maven-publish`
 }
 
@@ -9,7 +9,6 @@ group = "org.jetbrains.kotlin.spec.grammar.tools"
 version = "0.1"
 
 val archivePrefix = "kotlin-grammar-tools"
-val jar: Jar by tasks
 
 repositories {
     mavenLocal()
@@ -18,7 +17,7 @@ repositories {
 
 dependencies {
     compileOnly(kotlin("stdlib-jdk8"))
-    compile("org.jetbrains.kotlin.spec.grammar:kotlin-grammar-parser:0.1")
+    implementation("org.jetbrains.kotlin.spec.grammar:kotlin-grammar-parser:0.1")
 }
 
 publishing {
@@ -34,17 +33,21 @@ publishing {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "11"
 }
 
-jar.archiveName = "$archivePrefix-$version.jar"
+tasks.withType<Jar> {
+    archiveFileName.set("$archivePrefix-$archiveVersion.jar")
 
-jar.manifest {
-    attributes(
-        mapOf(
-            "Class-Path" to configurations.runtime.files.joinToString(" ") { it.name }
+    manifest {
+        attributes(
+            mapOf(
+                "Class-Path" to configurations.runtimeClasspath.get().files.joinToString(" ") { it.name }
+            )
         )
-    )
-}
+    }
 
-jar.from(configurations.runtime.files.map { if (it.isDirectory) it else zipTree(it) })
+    from(configurations.runtimeClasspath.get().files.map { if (it.isDirectory) it else zipTree(it) })
+
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
