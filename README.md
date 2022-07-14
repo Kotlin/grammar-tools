@@ -28,7 +28,7 @@ The grammar is located in the [Kotlin specification repository](https://github.c
 
 ## Status
 
-The library is develped **only for internal purposes** of the Kotlin team, and actual state of the library isn't guaranteed.
+The library is developed **only for internal purposes** of the Kotlin team, and actual state of the library isn't guaranteed.
 
 ## Using
 
