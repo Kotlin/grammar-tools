@@ -32,9 +32,16 @@ The library is developed **only for internal purposes** of the Kotlin team, and 
 
 ## Using
 
-To use the library you can run the `publishToMavenLocal` gradle task and add `mavenLocal` to repositories in your program, and then add dependency from this library. For example (gradle): `implementation("org.jetbrains.kotlin.spec.grammar.tools:kotlin-grammar-tools:0.1")`.
+To use the library, you need to perform the following steps.
 
-Also, you can just download jar from [Releases](https://github.com/Kotlin/kotlin-grammar-tools/releases) or TeamCity (`kotlin-grammar-tools` artifacts can be found on the [TeamCity Kotlin grammar builds pages](https://teamcity.jetbrains.com/viewType.html?buildTypeId=Kotlin_Spec_GrammarMaster)).
+1. (Prerequisite) Get the [Kotlin specification repository](https://github.com/Kotlin/kotlin-spec) and run its `:grammar:publishToMavenLocal` gradle task.
+   This will build and install the `kotlin-grammar-parser` dependency.
+1. Run the `publishToMavenLocal` gradle task.
+   This will build and install the `kotlin-grammar-tools` library.
+1. Add `mavenLocal` to repositories in your project, and then add the dependency for this library.
+   For example (gradle): `implementation("org.jetbrains.kotlin.spec.grammar.tools:kotlin-grammar-tools:0.1")`.
+
+As an alternative for steps 1 and 2, you can just download the jars from [Releases](https://github.com/Kotlin/kotlin-grammar-tools/releases) or TeamCity (both `kotlin-grammar-parser` and `kotlin-grammar-tools` artifacts can be found on the [TeamCity Kotlin grammar build page](https://teamcity.jetbrains.com/viewType.html?buildTypeId=Kotlin_Spec_GrammarMaster)).
 
 ## Exceptions
 
