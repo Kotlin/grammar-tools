@@ -37,7 +37,7 @@ tasks.withType<KotlinCompile> {
 }
 
 tasks.withType<Jar> {
-    archiveFileName.set("$archivePrefix-$archiveVersion.jar")
+    archiveFileName.set("$archivePrefix-${archiveVersion.get()}.jar")
 
     manifest {
         attributes(
